@@ -11,7 +11,12 @@ def root():
 
 @app.route('/api/v1/help')
 def api_v1_help():
-    return jsonify(['/api/v1/help', '/api/v1/restart', '/api/v1/status', '/api/v1/terminate'])
+    help = {}
+    help['/api/v1/help'] = 'Display avalible URLs and descriptions.'
+    help['/api/v1/restart'] = 'Terminate running bout_observer processes (if any) and start a new one.'
+    help['/api/v1/status'] = 'Display config.txt information, process state, and real-time bout information.'
+    help['/api/v1/terminate'] = 'Terminate running bout_observer processes.'
+    return jsonify(help)
 
 
 @app.route('/api/v1/restart')

@@ -45,9 +45,8 @@ class BoutObserver:
             try:
                 self.bout = self.get_bout()
                 if self.is_bout_over(self.bout) and not self.is_same_bout(self.bout, last_bout):
-                    # requests.post(self.c['sdc_url'], json=self.bout)
+                    requests.post(self.c['sdc_url'], json=self.bout)
                     last_bout = deepcopy(self.bout)
-                    print('BOUT SENT!')
                     print(last_bout)
             except requests.exceptions.ConnectionError as e:
                 print(e)
