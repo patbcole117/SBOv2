@@ -32,8 +32,8 @@ class BoutObserver:
         self.p_list.clear()
 
     def start_process(self):
-        print('P START')
         self.terminate_process()
+        print('P START')
         p = Process(target=self.observe_bout)
         self.p_list.append(p)
         p.start()
@@ -54,17 +54,16 @@ class BoutObserver:
             sleep(2)
 
     def get_bout(self):
-        print('GET BOUT')
-        bout = json.loads(requests.get(self.c['salty_url']).content)
+        b_raw = requests.get(self.c['salty_url']).content
+        bout = json.loads(b_raw)
         bout['bout_date'] = datetime.now().strftime('%Y-%m-%d, %H:%M:%S')
         return bout
     
     def is_bout_over(self, bout):
-        print('IS BOUT OVER')
-        if bout['status'] == '1' or bout['status'] == '2':
-            return True
-        else:
-            return False
+            if bout['status'] == '1' or bout['status'] == '2':
+                return True
+            else:
+                return False
     
     def is_same_bout(self, b1, b2):
         print('IS SAME BOUT')
