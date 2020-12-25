@@ -51,7 +51,7 @@ class BoutObserver:
                     print(last_bout)
             except requests.exceptions.ConnectionError as e:
                 print(e)
-            sleep(2)
+            #sleep(2)
 
     def get_bout(self):
         b_raw = requests.get(self.c['salty_url']).content
@@ -66,7 +66,6 @@ class BoutObserver:
                 return False
     
     def is_same_bout(self, b1, b2):
-        print('IS SAME BOUT')
         if b1 and b2:
             if b1['p1name'] == b2['p1name'] and b1['p2name'] == b2['p2name'] and b1['p1total'] == b2['p1total'] and b1['p2total'] == b2['p2total']:
                 return True
