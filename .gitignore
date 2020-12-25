@@ -1,0 +1,4 @@
+/.sbo_venv/
+/.vscode/
+__pycache__
+config.txt
