@@ -51,7 +51,7 @@ class BoutObserver:
                     print(last_bout)
             except requests.exceptions.ConnectionError as e:
                 print(e)
-            #sleep(2)
+            sleep(2)
 
     def get_bout(self):
         b_raw = requests.get(self.c['salty_url']).content
