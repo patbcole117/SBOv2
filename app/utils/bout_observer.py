@@ -54,15 +54,19 @@ class BoutObserver:
 
     def get_bout(self):
         b_raw = requests.get(self.c['salty_url']).content
-        bout = json.loads(b_raw)
-        bout['bout_date'] = datetime.now().strftime('%Y-%m-%d, %H:%M:%S')
-        return bout
+        try:
+            bout = json.loads(b_raw)
+            bout['bout_date'] = datetime.now().strftime('%Y-%m-%d, %H:%M:%S')
+            return bout
+        except json.decoder.JSONDecodeError as e:
+            print(e)
+            return None
     
     def is_bout_over(self, bout):
+        if bout:
             if bout['status'] == '1' or bout['status'] == '2':
                 return True
-            else:
-                return False
+        return False
     
     def is_same_bout(self, b1, b2):
         if b1 and b2:
