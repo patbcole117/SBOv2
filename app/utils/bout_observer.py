@@ -45,7 +45,7 @@ class BoutObserver:
             try:
                 self.bout = self.get_bout()
                 if self.is_bout_over(self.bout) and not self.is_same_bout(self.bout, last_bout):
-                    requests.post(self.c['sdc_url'], json=self.bout)
+                    requests.post(self.c['SBO_SDC_URL'], json=self.bout)
                     last_bout = deepcopy(self.bout)
                     print(last_bout)
             except requests.exceptions.ConnectionError as e:
@@ -53,7 +53,7 @@ class BoutObserver:
             sleep(2)
 
     def get_bout(self):
-        b_raw = requests.get(self.c['salty_url']).content
+        b_raw = requests.get(self.c['SBO_SALTY_URL']).content
         try:
             bout = json.loads(b_raw)
             bout['bout_date'] = datetime.now().strftime('%Y-%m-%d, %H:%M:%S')
