@@ -90,3 +90,43 @@ class BoutObserver:
         p = Process(target=self.observe_bout)
         self.p_list.append(p)
         p.start()
+<<<<<<< HEAD
+=======
+
+    def observe_bout(self):
+        print('OBSERVE BOUT')
+        last_bout = None
+        while True:
+            try:
+                self.bout = self.get_bout()
+                if self.is_bout_over(self.bout) and not self.is_same_bout(self.bout, last_bout):
+                    requests.post(self.c['SBO_SDC_URL'], json=self.bout)
+                    last_bout = deepcopy(self.bout)
+                    print(last_bout)
+            except requests.exceptions.ConnectionError as e:
+                print(e)
+            sleep(2)
+
+    def get_bout(self):
+        b_raw = requests.get(self.c['SBO_SALTY_URL']).content
+        try:
+            bout = json.loads(b_raw)
+            bout['bout_date'] = datetime.now().strftime('%Y-%m-%d, %H:%M:%S')
+            return bout
+        except json.decoder.JSONDecodeError as e:
+            print(e)
+            return None
+    
+    def is_bout_over(self, bout):
+        if bout:
+            if bout['status'] == '1' or bout['status'] == '2':
+                return True
+        return False
+    
+    def is_same_bout(self, b1, b2):
+        if b1 and b2:
+            if b1['p1name'] == b2['p1name'] and b1['p2name'] == b2['p2name'] and b1['p1total'] == b2['p1total'] and b1['p2total'] == b2['p2total']:
+                return True
+        return False
+        
+>>>>>>> origin/master

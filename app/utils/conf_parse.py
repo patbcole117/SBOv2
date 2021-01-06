@@ -1,7 +1,6 @@
 import json
-import re
+import os
 
 def get_config():
-    with open('app/mnt/config.txt', 'r') as config:
-        config = json.load(config)
-        return config
+    config = {'SBO_HOST': os.getenv('SBO_HOST'), 'SBO_PORT': os.getenv('SBO_PORT'), 'SBO_SDC_URL': os.getenv('SBO_SDC_URL'), 'SBO_SALTY_URL': os.getenv('SBO_SALTY_URL')}
+    return config

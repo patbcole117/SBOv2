@@ -1,7 +1,6 @@
 FROM python:alpine3.7
-COPY . /SBO
-WORKDIR /SBO
+COPY . /sbo
+WORKDIR /sbo
 RUN pip install -r requirements.txt
-EXPOSE 50100
-ENTRYPOINT [ "python" ]
-CMD [ "run.py" ]
+RUN pip install gunicorn
+CMD [ "gunicorn", "--workers", "1", "--bind", "0.0.0.0:80", "run:app" ]
