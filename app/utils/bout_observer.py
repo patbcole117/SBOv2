@@ -18,11 +18,11 @@ class BoutObserver:
     # Bout observing
     def bout_alert(self):
         if self.is_bout_open():
-            alert_list = self.c["SDC_ALERT_LIST"]
+            alert_list = json.loads(self.c['SBO_ALERT_LIST'])
             print(alert_list)
 
     def get_bout(self):
-        b_raw = requests.get(self.c['SDC_SALTY_URL']).content
+        b_raw = requests.get(self.c['SBO_SALTY_URL']).content
         try:
             bout = json.loads(b_raw)
             bout['bout_date'] = datetime.now().strftime('%Y-%m-%d, %H:%M:%S')
@@ -64,7 +64,7 @@ class BoutObserver:
                     print(last_bout)
                     # if the current bout is over send the match results to the SDC to be recorded.
                     if self.is_bout_over():
-                        requests.post(self.c['SDC_URL'], json=self.bout)
+                        requests.post(self.c['SBO_SDC_URL'], json=self.bout)
                         print("sent")
             except requests.exceptions.ConnectionError as e:
                 print(e)
